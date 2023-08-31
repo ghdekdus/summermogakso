@@ -1,1 +1,175 @@
+// 201923664 사이버보안학과 홍다연
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+union info // 고객 추가 정보에 대한 구조체
+{
+ 
+float info_S; // 수영 고객의 추가 정보
+ 
+int info_G; // 골프 고객의 추가 정보
+ 
+char info_Y[50]; //요가 고객의 추가 정보
+};
+struct people // 고객들의 정보에 대한 구조체
+{
+ 
+char name[20], number[50]; // 고객 이름과 전화번호
+ 
+char code; // 강습 코드
+ 
+union info info;
+}people;
+struct S_BT
+{
+ 
+char name[20];
+ 
+float info_S;
+};
+struct G_BS
+{
+ 
+char name[20];
+ 
+int info_G;
+};
+int main()
+{
+ 
+int num = 0; // 전체 고객의 수
+ 
+int count_S = 0, count_G = 0, count_Y = 0; //종목 별 인원수 초기화
+ 
+struct S_BT S_BT = { .name = 0,
+.info_S = 100 }; //베스트 수영 기록 초기화
+ 
+float total_S = 0.0;
+ 
+struct G_BS G_BS = { .name = 0, .info_G = 100 }; //베스트 골프 기록 초기화
+ 
+int total_G = 0;
+ 
+int count_YT = 0; // 요가 척추 질환 보유자의 수
+ 
+printf("고객 수를 입력하세요.\n");
+ 
+scanf("%d", &num);
+ 
+struct people* id1 = malloc(sizeof(people) * num); //구조체 변수 선언
+ 
+for (int i = 0; i < num; i++) // for문을 활용하여 입력받은 고객의 수만큼 반복하며 고객에 대한 정보를 입력받음
+ 
+{
+ 
+scanf("%s %s %c", &id1[i]
+.name, &id1[i]
+.number, &id1[i]
+.code); // 고객들의 이름, 전화번호, 수강 코드 입력받음
+ 
+if (id1[i]
+.code == 'S'
+) //수영 강습 고객일 경우
+ 
+{
+ 
+scanf(" %f", &id1[i]
+.info.info_S);
+ 
+count_S++; //수영 강습 하는 인원 + 1
+ 
+total_S += id1[i]
+.info.info_S; //수영 기록 평균을 위해 모두 더함
+ 
+if (S_BT.info_S >= id1[i]
+.info.info_S) //수영 최고 기록보다 좋은 사람이면 변경
+ 
+{
+ 
+strcpy(S_BT.name, id1[i]
+.name);
+ 
+S_BT.info_S = id1[i]
+.info.info_S;
+ 
+}
+ 
+}
+ 
+else if (id1[i]
+.code == 'G'
+) // 골프 강습 고객일 경우
+ 
+{
+ 
+scanf(" %d", &id1[i]
+.info.info_G);
+ 
+count_G++;
+ 
+total_G += id1[i]
+.info.info_G;
+ 
+if (G_BS.info_G >= id1[i]
+.info.info_G)
+ 
+{
+ 
+strcpy(G_BS.name, id1[i]
+.name);
+ 
+G_BS.info_G = id1[i]
+.info.info_G;
+ 
+}
+ 
+}
+ 
+else // 그 이외 (즉, 요가 강습 고객일 경우)
+ 
+{
+ 
+scanf(" %s", &id1[i]
+.info.info_Y);
+ 
+count_Y++;
+ 
+if (strcmp(id1[i]
+.info.info_Y, "TRUE") == 0)
+ 
+{
+ 
+count_YT++; //척추 질환 있는 사람 +1
+ 
+}
+ 
+}
+ 
+}
+ 
+printf("수강생 인원 : 수영 %d명, 골프 %d명, 요가 %d명\n", count_S, count_G, count_Y);
+ 
+if (num == 0)
+ 
+{
+ 
+exit(1);
+ 
+}
+ 
+printf("최고 수영 실력자 : %s %.1f\n", S_BT.name, S_BT.info_S);
+ 
+printf("수영 평균 기록 : %.1f초\n", total_S / count_S); // 평균을 위해 수영 강습 수로 나눔. 소수점 둘째 자리 이하는 버림
+ 
+printf("골프 최저타 기록 보유자 : %s %d타\n", G_BS.name, G_BS.info_G);
+ 
+printf("골프 평균 타수 : %.0f타\n", (double)total_G / count_G);
+ 
+printf("요가 척추질환 보유자 : %d명\n", count_YT);
+ 
+free(id1); // 동적 할당 해제
+ 
+return 0;
+}
 
