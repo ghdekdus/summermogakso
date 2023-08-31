@@ -1,1 +1,111 @@
+// 2번 문제 실행 : 16행~36행, 165~170행 주석 삭제
+// 3번 문제 실행 : 49행~100행, 172~175행 주석 삭제 후 실행 부탁드립니다.
+#include <stdio.h>
+#include <malloc.h>
+#include <stdlib.h>
+#define MAX_STACK_SIZE 100
+#define level 8 // tree의 레벨에 대한 매크로 상수 설정
+typedef struct TreeNode {
+ 
+char data;
+ 
+struct TreeNode* left, * right;
+} TreeNode;
+/*2번 : postorder 함수 recursive version으로 구현
+recursive function이 어떻게 돌아가는지를 직접 콘솔창에 찍히도록 함
+void postorder(TreeNode* t) {
+ 
+if (t) {
+ 
+for (int i = 0; i < level; i++) {
+ 
+printf(" "); // 노드의 레벨에 따라 공백 출력
+ 
+}
+ 
+printf("now traversal node %c\n", t->data); // 현재 노드 순서 출력
+ 
+postorder(t->left, level + 1); // 왼쪽 서브트리 순회
+ 
+postorder(t->right, level + 1); // 오른쪽 서브트리 순회
+ 
+for (int i = 0; i < level; i++) {
+ 
+printf(" "); // 노드의 레벨에 따라 공백 출력
+ 
+}
+ 
+printf("traversal node %c -> end\n", t->data); // 노드 순서 출력
+ 
+}
+}
+*/
+// postorder 함수의 결과를 출력하는 함수
+void postorder_print(TreeNode* t) {
+ 
+if (t) {
+ 
+postorder_print(t->left);
+ 
+postorder_print(t->right);
+ 
+printf("%c ", t->data);
+ 
+}
+ 
+return;
+}
+/*3번 : postorder 함수 iterative version으로 구현
+int top = -1;
+TreeNode* stack[MAX_STACK_SIZE];
+void push(TreeNode* p)
+{
+ 
+if (top < 10)
+ 
+{
+ 
+stack[++(top)] = p;
+ 
+}
+}
+TreeNode* pop()
+{
+ 
+TreeNode* p = NULL;
+ 
+if (top >= 0)
+ 
+{
+ 
+p = stack[top--];
+ 
+}
+ 
+return p;
+}
+void iterPostorder(TreeNode* root)
+{
+ 
+top = -1;
+ 
+int i = 0;
+ 
+TreeNode* node;
+ 
+TreeNode* output[MAX_STACK_SIZE];
+ 
+push(root);
+ 
+while (top >= 0)
+ 
+{
+ 
+node = pop();
+ 
+output[i++] = node;
+ 
+if (node->left != NULL)
+ 
+{
 
