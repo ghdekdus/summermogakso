@@ -1,1 +1,109 @@
+#define _CRT_SECURE_NO_WARNINGS
+#ifndef __AL_GRAPH__
+#define __AL_GRAPH__
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#endif // !__AL_GRAPH__
+#define MAX 100
+#define FALSE 0
+#define TRUE 1
+#define MAX_VERTICES 100
+#define MAX_NODES 100
+int get_buildings(char* numbers, int* buildings);
+int visit[MAX] = { 0, }; // 방문 여부 확인
+typedef struct graph
+{
+ 
+int n;
+ 
+int adj_mat[MAX_VERTICES]
+[MAX_VERTICES];
+}graph;
+int visited[MAX_VERTICES];
+void insert_vertex(graph* g, int v) // 간선 삽입
+{
+ 
+int start, end;
+ 
+if (start >= g->n |
+| end >= g->n) // 정점 입력 오류
+ 
+{
+ 
+return;
+ 
+}
+ 
+g->adj_mat[start]
+[end] = 1;
+ 
+g->adj_mat[end]
+[start] = 1;
+}
+// 인접 행렬로 표현된 그래프에 대한 깊이 우선 탐색 (DFS)
+void dfs_mat(graph* g, int v)
+{
+ 
+int w;
+ 
+visited[v] = TRUE; 
+// 정점 v의 방문 표시
+ 
+for (w = 0; w < g->n; w++) 
+// 인접 정점 탐색
+ 
+if (g->adj_mat[v]
+[w] && !visited[w]
+)
+ 
+dfs_mat(g, w); 
+//정점 w에서 DFS 새로 시작
+}
+typedef struct node* nodePointer;
+typedef struct node
+{
+ 
+int vertex;
+ 
+nodePointer link;
+};
+typedef struct node* queuePointer;
+typedef struct node
+{
+ 
+int vertex;
+ 
+queuePointer link;
+};
+queuePointer front, rear;
+nodePointer adjLists[MAX_NODES];
+// BFS
+int BFS(int g)
+{
+ 
+struct node* cur;
+ 
+int queue[20] = { 0, };
+ 
+int front = 0, rear = 0;
+ 
+queue[rear++] = g;
+ 
+visit[g] = 1;
+ 
+while (queue[front]
+)
+ 
+{
+ 
+cur = queue[front];
+ 
+queue[front] = 0;
+ 
+printf("%d", cur);
+ 
+for (int i = 1; i <= 50; i++)
+ 
+{
 
