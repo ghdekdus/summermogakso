@@ -1,1 +1,112 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include<time.h>
+// 걸리는 시간 측정
+double start, end;
+//6가지 정렬 나열하기
+typedef struct _element
+{
+ 
+int key;
+}element;
+// insert sort
+void insert(element e, element a[], int i)
+{
+ 
+while (e.key < a[i]
+.key)
+ 
+{
+ 
+a[i + 1] = a[i];
+ 
+i--;
+ 
+}
+ 
+a[i] = e;
+}
+//bubble sort
+void bubblesort(element a[], int n)
+{
+ 
+element tmp;
+ 
+int i, j;
+ 
+for (i = 0; i < n - 1; i++)
+ 
+{
+ 
+for (j = 0; j < n - 1 - i; j++)
+ 
+{
+ 
+if (a[j + 1]
+.key < a[j]
+.key)
+ 
+{
+ 
+tmp = a[j + 1];
+ 
+a[j + 1] = a[j];
+ 
+a[j] = tmp;
+ 
+}
+ 
+}
+ 
+}
+}
+//quick sort (stack data structure)
+int stack[10100];
+int top = 0;
+void initStack()
+{
+ 
+top = 0;
+}
+void push(int i)
+{
+ 
+if (top >= 10100)
+ 
+{
+ 
+return;
+ 
+}
+ 
+else stack[top++] = i;
+}
+int pop()
+{
+ 
+if (top == 0)
+ 
+{
+ 
+return 0;
+ 
+}
+ 
+else
+ 
+{
+ 
+return stack[top--];
+ 
+}
+}
+int is_Empty()
+{
+ 
+if (top == 0)
+ 
+{
+ 
+return 1;
 
