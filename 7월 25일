@@ -1,1 +1,118 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 5
+typedef struct Queue {
+ 
+int front; // 앞쪽 index
+ 
+int rear; // 뒤쪽 index
+ 
+int data[MAX];
+} Queue;
+void init(Queue* q) // q 초기화 함수
+{
+ 
+q->front = 0;
+ 
+q->rear = 4;
+ 
+q->data[0] = 101; // 진동벨을 queue에 저장
+ 
+q->data[1] = 102;
+ 
+q->data[2] = 103;
+ 
+q->data[3] = 104;
+ 
+q->data[4] = 105;
+}
+void init_bell(Queue* bell)
+{
+ 
+bell->front = 0;
+ 
+bell->rear = 0;
+}
+int is_full(Queue* q) {
+ 
+if (q->rear == MAX - 1) // 인덱스는 0부터 시작하여 n-1번까지 있으므로 q의 마지막 요소의 인덱스가 n-1이라면 full
+ 
+{
+ 
+return 1;
+ 
+}
+ 
+else
+ 
+{
+ 
+return 0;
+ 
+}
+}
+int dequeue(Queue* order_fin, int* front)
+{
+ 
+int dequeued_data = order_fin->data[*front];
+ 
+(*front)++;
+ 
+return dequeued_data; // 삭제된 데이터 반환
+}
+void enqueue(Queue* bell, Queue* order_fin)
+{
+ 
+order_fin->rear++;
+ 
+order_fin->data[order_fin->rear] = bell->data[bell->front];
+ 
+dequeue(bell, &bell->front);
+}
+int is_empty(Queue* q) { // q가 비어있는지 확인
+ 
+if (q->front == q->rear) // 맨처음 인덱스와 맨 마지막 인덱스가 같다면 empty
+ 
+{
+ 
+return 1;
+ 
+}
+ 
+return 0;
+}
+int bell_rep(Queue* q, int N) // 중복되는 진동벨이 존재하는 경우 주문 접수 여부 결정
+{
+ 
+int bell_rep = 0;
+ 
+int i = q->front;
+ 
+while (i != q->rear) // 반복하여 현재 요소와 N이 일치하는지 확인
+ 
+{
+ 
+if (q->data[i] == N)
+ 
+{
+ 
+bell_rep = 1; // 일치할 경우 true 반환
+ 
+break;
+ 
+}
+ 
+i = (i + 1) % (MAX + 1); // q의 순환 처리 (원형 큐 : 큐의 끝부분에 도달하면 다시 첫부분으로 돌아감)
+ 
+}
+ 
+return bell_rep;
+}
+int main()
+{
+ 
+int number; // 서비스 번호
+ 
+Queue order_fin; // 주문 완료 후 손님에게 전달된 진동벨
 
